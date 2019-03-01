@@ -23,10 +23,11 @@ python3-dev python-pip python3-pip
 sudo apt install -fy gcc gcc-multilib 
 
 # Get desktop environment requirements
-sudo apt install -fy lightdm xinit dmenu lightdm-gtk-greeter i3 feh
+sudo apt install -fy lightdm xinit dmenu lightdm-gtk-greeter i3 feh \
+compton
 
 # More general software
-sudo apt install -fy terminator zsh firefox
+sudo apt install -fy terminator zsh firefox rxvt-unicode
 
 # i3-gaps requirements
 # From https://github.com/airblader/i3/wiki/compiling-&-installing
