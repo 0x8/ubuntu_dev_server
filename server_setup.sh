@@ -17,7 +17,7 @@ sudo apt upgrade -fy
 
 # Ensure vim and python requirements are met
 sudo apt install -fy vim open-vm-tools tmux python python-dev python3 \
-python3-dev 
+python3-dev python-pip python3-pip
 
 # Get gcc requirements
 sudo apt install -fy gcc gcc-multilib 
@@ -67,6 +67,13 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 git clone https://github.com/powerline/fonts ~/.fonts
 cd ~/.fonts
 ./install.sh
+
+# Vim pathogen
+mkdir -p ~/.vim/autoload ~/.vim/bundle && \
+curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+
+# Powerline
+sudo pip3 install powerline-status
 
 # Dotfiles
 git clone --branch --single-branch ubuntu_server https://github.com/0x8/nptr_dotfiles ~/.nptr_dotfiles
