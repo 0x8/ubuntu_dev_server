@@ -37,7 +37,6 @@ libstartup-notification0-dev libxcb-randr0-dev libev-dev automake \
 libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev autoconf \
 libxkbcommon-x11-dev libxcb-xrm0 libxcb-xrm-dev libxcb-shape0-dev
 
-
 # Installation of i3-gaps
 HERE="$(dirname $(readlink -e $0))"
 git clone https://github.com/airblader/i3 .i3-gaps
@@ -61,7 +60,18 @@ echo "user-session=i3" | sudo tee -a /etc/lightdm/lightdm.conf.d/lightdm.conf
 # Ensure lightdm is enabled in systemctl
 sudo systemctl enable lightdm.service
 
-# Dotfiles
+# Oh-my-zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
+# Powerline fonts
+git clone https://github.com/powerline/fonts ~/.fonts
+cd ~/.fonts
+./install.sh
+
+# Dotfiles
+git clone --branch --single-branch ubuntu_server https://github.com/0x8/nptr_dotfiles ~/.nptr_dotfiles
+cd ~/.nptr_dotfiles
+sudo ./install.sh
 
 # End of Script, reboot machine
+reboot
