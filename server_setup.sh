@@ -77,7 +77,7 @@ curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 sudo pip3 install powerline-status
 
 # Dotfiles
-git clone --branch --single-branch ubuntu_server https://github.com/0x8/nptr_dotfiles ~/.nptr_dotfiles
+git clone https://github.com/0x8/nptr_dotfiles --branch ubuntu_server --single-branch ~/.nptr_dotfiles 
 cd ~/.nptr_dotfiles
 sudo ./install.sh
 
