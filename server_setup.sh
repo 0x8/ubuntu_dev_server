@@ -27,7 +27,8 @@ sudo apt install -fy lightdm xinit dmenu lightdm-gtk-greeter i3 feh \
 compton
 
 # More general software
-sudo apt install -fy terminator zsh firefox rxvt-unicode
+sudo apt install -fy zsh firefox rxvt-unicode ruby-full build-essential \
+libgtk2.0-0
 
 # i3-gaps requirements
 # From https://github.com/airblader/i3/wiki/compiling-&-installing
@@ -77,9 +78,19 @@ curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 sudo pip3 install powerline-status
 
 # Dotfiles
+if [ -d "$HOME/.nptr_dotfiles" ]
+then
+    echo "Moving existing .nptr_dotfiles directory to .old_nptr_dotfiles."
+    echo "If you no longer need the directory, you should manually remove it once this script finishes"
+    mv "$HOME/.nptr_dotfiles" "$HOME/.old_nptr_dotfiles"
+fi
 git clone https://github.com/0x8/nptr_dotfiles --branch ubuntu_server --single-branch ~/.nptr_dotfiles 
 cd ~/.nptr_dotfiles
 sudo ./install.sh
+
+# Clean up
+# Remove i3-gaps source dir
+rm -r $HERE/.i3-gaps
 
 # End of Script, reboot machine
 reboot
