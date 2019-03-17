@@ -88,9 +88,58 @@ git clone https://github.com/0x8/nptr_dotfiles --branch ubuntu_server --single-b
 cd ~/.nptr_dotfiles
 sudo ./install.sh
 
+# Bootstrap Studio
+wget -O "$HERE/.bstudio.deb" https://bootstrapstudio.io/releases/desktop/4/Bootstrap%20Studio%204%20(64bit).deb
+sudo dpkg -i "$HERE/.bstudio.deb"
+
+## /usr/bin/bstudio launcher script
+echo "#!/bin/bash" | sudo tee -a /usr/bin/bstudio 1>/dev/null
+echo "" | sudo tee -a /usr/bin/bstudio 1>/dev/null
+echo "/opt/bootstrapstudio/Bootstrap\ Studio" | sudo tee -a /usr/bin/bstudio 1>/dev/null
+sudo chmod +x /usr/bin/bstudio
+
+# Jekyll Install
+if [ -f "$HOME/.envvars" ]
+then
+    if ! grep -q "GEM_HOME" "$HOME/.envvars"
+    then
+        # Export the required gem variables to envvars
+        echo "export GEM_HOME=\"$HOME/gems\"" >> "$HOME/.envvars"
+        echo "export PATH=\"$HOME/gems/bin:$PATH\"" >> "$HOME/.envvars"
+        echo "Don't forget to source .envvars or restart your shell for"
+        echo "the gem env to take effect!"
+    fi
+    # If we already found the GEM_HOME then the vars are most likely already set right
+else
+    # If we don't have an env vars file, simply export to bashrc and zshrc if they exist
+    if [ -f "$HOME/.bashrc" ]
+    then
+        echo "export GEM_HOME=\"$HOME/gems\"" >> "$HOME/.bashrc"
+        echo "export PATH=\"$HOME/gems/bin:$PATH\"" >> "$HOME/.bashrc"
+        echo "Installed GEM variables to BASHRC"
+    fi
+
+    if [ -f "$HOME/.zshrc" ]
+    then
+        echo "export GEM_HOME=\"$HOME/gems\"" >> "$HOME/.zshrc"
+        echo "export PATH=\"$HOME/gems/bin:$PATH\"" >> "$HOME/.zshrc"
+        echo "Installed GEM variables to ZSHRC"
+    fi
+
+    echo "Finished installing gem variables to relevant source files"
+    echo "Be sure to restart your terminal or re-source your rc file"
+    echo "for the changes to take effect." 
+fi
+## Source bashrc since this is working in bash
+source "$HOME/.bashrc"
+## Now that we can use gems, lets install jekyll and bundler
+gem install jekyll bundler
+
 # Clean up
 # Remove i3-gaps source dir
+# Remove bstudio.deb
 rm -r $HERE/.i3-gaps
+rm "$HERE/.bstudio.deb"
 
 # End of Script, reboot machine
-reboot
+echo "It is advised to reboot at this time"
